@@ -15,7 +15,7 @@ public class PlayerOutOfGround : MonoBehaviour {
     void Update() {
 
         if (transform.position.y < -1) {
-            gm.Respawn(this.gameObject);
+            gm.Respawn(GetComponent<PlayerScript>());
         }
     }
 }

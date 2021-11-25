@@ -47,13 +47,13 @@ public class PlayerMovement : MonoBehaviour  {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.body.tag == "Surface") {
+        if (collision.gameObject.tag == "Surface") {
             if (!toJump) { 
                 Invoke("EnableJump", jumpReload);
             }
         }
 
-        if (collision.body.tag == "Obstacle") {
+        if (collision.gameObject.tag == "Obstacle") {
             if (!toJump) { 
                 Invoke("EnableJump", jumpReload);
             }

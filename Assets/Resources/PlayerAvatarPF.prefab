@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7915989068065610294}
   - component: {fileID: 7915989068065610280}
   - component: {fileID: 7915989068065610295}
+  - component: {fileID: -5332899414338870238}
   m_Layer: 0
   m_Name: PlayerAvatarPF
   m_TagString: Player
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ac888fc631dda64d81601ff86718d50, type: 2}
+  - {fileID: 2100000, guid: a0d98aabcb60dc04a8f6b64e2a9b5bc0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,4 +160,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
-  PV: {fileID: 0}
+--- !u!114 &-5332899414338870238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915989068065610287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb3596ead1b7d240bfc14033fb5fed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamName: 
