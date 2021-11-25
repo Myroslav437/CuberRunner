@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour {
     public Vector3 spawnPointBlue = new Vector3(0, 0, 0);
 
     private void Start()  {
-        FindObjectOfType<ObstaclesGenerator>().GetComponent<ObstaclesGenerator>().enabled = true;
+        FindObjectOfType<ObstaclesGenerator>().GetComponent<ObstaclesGenerator>().enabled = false;
+
+
+        foreach (PlayerScript ps in FindObjectsOfType<PlayerScript>()) {
+            Respawn(ps);
+        }
     }
 
     public void Respawn(PlayerScript player) {
@@ -20,5 +25,9 @@ public class GameManager : MonoBehaviour {
         else {
             player.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
         }
+    }
+
+    public void StartGame() {
+        FindObjectOfType<ObstaclesGenerator>().GetComponent<ObstaclesGenerator>().enabled = true;
     }
 }

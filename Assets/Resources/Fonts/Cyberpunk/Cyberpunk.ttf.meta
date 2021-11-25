@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f0a29c3c7ec807d46b725d17ddb3b84a
+guid: 80137ee196d509246b390331b262dd45
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - DEBUG FREE TRIAL
+  - Cyberpunk
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
