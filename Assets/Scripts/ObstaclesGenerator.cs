@@ -71,7 +71,13 @@ public class ObstaclesGenerator : MonoBehaviour {
     }
 
     GameObject InstantiateObstacle(string pfb, Vector3 position, Quaternion rotation) {
-        return Instantiate(Resources.Load(pfb, typeof(GameObject)), position, rotation) as GameObject;
+        GameObject go = Instantiate(Resources.Load(pfb, typeof(GameObject)), position, rotation) as GameObject;
+        return go;
+    }
+
+    public GameObject SpawnFinishTrigger() {
+        GameObject go = InstantiateObstacle("FinishGameCube", spawnPoint, Quaternion.identity);
+        return go;
     }
 
 }

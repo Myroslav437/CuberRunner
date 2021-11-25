@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour  {
     public float shakeTime = .2f;
     public float shakeStrength = .2f;
 
-
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
