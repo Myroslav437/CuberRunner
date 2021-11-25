@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 
     public void StartGame() {
         FindObjectOfType<ObstaclesGenerator>().GetComponent<ObstaclesGenerator>().enabled = true;
+        FindObjectOfType<ScoreController>().autoUpdateScore = true;
 
         foreach (PlayerScript ps in FindObjectsOfType<PlayerScript>()) {
             Respawn(ps);
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour {
 
         float redPoints = 0, bluePoints = 0;
         foreach (PlayerScript ps in FindObjectsOfType<PlayerScript>()) {
+        FindObjectOfType<ScoreController>().autoUpdateScore = false;
+
             if (ps.teamName == "Red")
             {
                 redPoints = ps.score;
@@ -87,6 +90,7 @@ public class GameManager : MonoBehaviour {
 
             if (timeFinish >= mathchTime) {
                 FindObjectOfType<ObstaclesGenerator>().SpawnFinishTrigger();
+                gameStarted = false;
             }
         }
         else {

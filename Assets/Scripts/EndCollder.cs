@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EndCollder : MonoBehaviour
 {
+    bool isUsed = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,12 @@ public class EndCollder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") { 
+        if (isUsed) {
+            return;
+        }
+        if (other.gameObject.tag == "Player") {
+            isUsed = true;
+
             string team = other.gameObject.GetComponent<PlayerScript>().teamName;
             FindObjectOfType<GameManager>().EndGame();
         }
