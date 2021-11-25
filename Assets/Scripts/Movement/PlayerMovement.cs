@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour  {
                 rb.AddForce(-sideForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
             }
         }
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKey(KeyCode.W)) {
             if (toJump) {
                 rb.AddForce(0, jumpForce * Time.deltaTime, 0, ForceMode.Impulse);
                 toJump = false;
@@ -47,20 +47,20 @@ public class PlayerMovement : MonoBehaviour  {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.body.tag == "Surface") {
-            if (!toJump) { 
-                Invoke("EnableJump", jumpReload);
-            }
-        }
-
-        if (collision.body.tag == "Obstacle") {
-            if (!toJump) { 
-                Invoke("EnableJump", jumpReload);
-            }
-            // respawn;
-        }
+       // if (collision.body.tag == "Surface") {
+       //     if (!toJump) { 
+       //         Invoke("EnableJump", jumpReload);
+       //     }
+       // }
+       //
+       // if (collision.body.tag == "Obstacle") {
+       //     if (!toJump) { 
+       //         Invoke("EnableJump", jumpReload);
+       //     }
+       //     // respawn;
+       // }
     }
-
+    
     public void EnableJump() {
         toJump = true;
     }
