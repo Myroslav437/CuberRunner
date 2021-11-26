@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class CanvasController : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class CanvasController : MonoBehaviour
     public Text blueTeamScore;
     public Text gameLogo;
 
+    int m_StickId = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class CanvasController : MonoBehaviour
 
         blueWinCanvaas.gameObject.SetActive(false);
         redWinCanvas.gameObject.SetActive(false);
+
     }
 
     public void OnPlayButtonPressed() {
@@ -55,6 +59,13 @@ public class CanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true)))
+            OnPlayButtonPressed();
+
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true)))
+            OnExitButtonPressed();
+
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button2", true)))
+            OnReturnToMenuButtonPressed();
     }
 }
