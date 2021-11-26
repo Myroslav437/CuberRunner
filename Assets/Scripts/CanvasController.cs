@@ -30,9 +30,12 @@ public class CanvasController : MonoBehaviour
         blueWinCanvaas.gameObject.SetActive(false);
         redWinCanvas.gameObject.SetActive(false);
 
+        Time.timeScale = 0;
     }
 
     public void OnPlayButtonPressed() {
+        Time.timeScale = 1;
+
         playButton.SetActive(false);
         exitButton.SetActive(false);
 

@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour  {
                     Debug.Log("Jump triggered by p" + playerId);
                     
                     //rb.AddForce(Vector3.Normalize(transform.TransformPoint(Vector3.up)), ForceMode.Impulse) ;
-                    rb.AddForce(Vector3.up*1.5f, ForceMode.Impulse);
+                    rb.AddForce((new Vector3(0,1,0))* sideForce, ForceMode.Impulse);
                     toJump = false;
 
                    // transform.DORewind();
