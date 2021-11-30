@@ -16,7 +16,7 @@ public class CanvasController : MonoBehaviour
     public Text gameLogo;
 
     int m_StickId1 = 1;
-    int m_StickId2 = 1;
+    int m_StickId2 = 2;
 
     // Start is called before the first frame update
     void Start()
