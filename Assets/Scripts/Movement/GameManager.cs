@@ -24,21 +24,22 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Respawn(PlayerScript player) {
-        Vector3 newVelocity = player.GetComponent<Rigidbody>().velocity;
-        newVelocity.z = 0;
-        player.GetComponent<Rigidbody>().velocity = newVelocity;
-
-        player.PelalizeScoreOnRespawn();
-
-        if (player.teamName == "Blue") {
-            player.transform.SetPositionAndRotation(spawnPointBlue, Quaternion.identity);
-        }
-        else if (player.teamName == "Red") {
-            player.transform.SetPositionAndRotation(spawnPointRed, Quaternion.identity);
-        }
-        else {
-            player.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
-        }
+       // Debug.Log("Respawned a player "+player.teamName);
+       // Vector3 newVelocity = player.GetComponent<Rigidbody>().velocity;
+       // newVelocity.z = 0;
+       // player.GetComponent<Rigidbody>().velocity = newVelocity;
+       //
+       // player.PelalizeScoreOnRespawn();
+       //
+       // if (player.teamName == "Blue") {
+       //     player.transform.SetPositionAndRotation(spawnPointBlue, Quaternion.identity);
+       // }
+       // else if (player.teamName == "Red") {
+       //     player.transform.SetPositionAndRotation(spawnPointRed, Quaternion.identity);
+       // }
+       // else {
+       //     player.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+       // }
     }
 
     public void StartGame() {

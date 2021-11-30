@@ -16,7 +16,7 @@ public class DestroyOnOut : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (!IsInScene()) {
-            Debug.Log("Object destroyed at: " + transform.position.ToString());
+            //Debug.Log("Object destroyed at: " + transform.position.ToString());
             Destroy(this.gameObject);
         }
     }

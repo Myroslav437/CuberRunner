@@ -62,13 +62,13 @@ public class CanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true)))
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true))||Input.GetKeyDown(KeyCode.P))
             OnPlayButtonPressed();
 
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true)))
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true)) || Input.GetKeyDown(KeyCode.E))
             OnExitButtonPressed();
 
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button2", true)))
+        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button2", true)) || Input.GetKeyDown(KeyCode.R))
             OnReturnToMenuButtonPressed();
     }
 }
