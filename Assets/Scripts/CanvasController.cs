@@ -15,7 +15,8 @@ public class CanvasController : MonoBehaviour
     public Text blueTeamScore;
     public Text gameLogo;
 
-    int m_StickId = 1;
+    int m_StickId1 = 1;
+    int m_StickId2 = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -62,13 +63,29 @@ public class CanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true))||Input.GetKeyDown(KeyCode.P))
+        if (xPressedByOneOfPlayers())
             OnPlayButtonPressed();
 
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true)) || Input.GetKeyDown(KeyCode.E))
+        if (oPressedByOneOfPlayers())
             OnExitButtonPressed();
 
-        if (Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button2", true)) || Input.GetKeyDown(KeyCode.R))
+        if (squarePressedByOneOfPlayers())
             OnReturnToMenuButtonPressed();
+    }
+
+
+    bool xPressedByOneOfPlayers()
+    {
+        return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button0", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button0", true));
+    }
+
+    bool oPressedByOneOfPlayers()
+    {
+        return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button1", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button1", true));
+    }
+
+    bool squarePressedByOneOfPlayers()
+    {
+        return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button2", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button2", true));
     }
 }
