@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PS4;
 
 
 public class CanvasController : MonoBehaviour
@@ -66,7 +67,7 @@ public class CanvasController : MonoBehaviour
         if (xPressedByOneOfPlayers())
             OnPlayButtonPressed();
 
-        if (oPressedByOneOfPlayers())
+        if (oPressedByOneOfPlayers()||trigPressedByOneOfPlayers())
             OnExitButtonPressed();
 
         if (squarePressedByOneOfPlayers())
@@ -81,9 +82,15 @@ public class CanvasController : MonoBehaviour
 
     bool oPressedByOneOfPlayers()
     {
+        //Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true))
         return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button1", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button1", true));
     }
 
+    bool trigPressedByOneOfPlayers()
+    {
+        //Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button1", true))
+        return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button3", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button3", true));
+    }
     bool squarePressedByOneOfPlayers()
     {
         return Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId1 + "Button2", true)) || Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId2 + "Button2", true));

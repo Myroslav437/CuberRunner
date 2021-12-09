@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PS4;
 
 public class testRespawnCollider : MonoBehaviour
 {
@@ -21,6 +22,13 @@ public class testRespawnCollider : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerMovement>())
         {
+            int playerId = other.gameObject.GetComponent<PlayerMovement>().playerId;
+            other.gameObject.GetComponent<PlayerMovement>().gyroCorrection.Set(
+                              -PS4Input.PadGetLastOrientation(playerId).x,
+                              -PS4Input.PadGetLastOrientation(playerId).y,
+                              PS4Input.PadGetLastOrientation(playerId).z
+                        );
+
             GameObject player = other.gameObject;
             Rigidbody playerRB = player.GetComponent<Rigidbody>();
 

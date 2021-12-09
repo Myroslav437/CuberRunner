@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {x: 0, y: 0, z: 100}
   distanceFreqencyBounds: {x: 10, y: 40}
-  XBounds: {x: 6.5, y: -6.5}
+  XBounds: {x: 9, y: -9}
 --- !u!4 &348650802
 Transform:
   m_ObjectHideFlags: 0
@@ -1507,19 +1507,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5332899414338870238, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: scoreMultiphier
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -5332899414338870238, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: collisionPenalty
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: zMax
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: zMin
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: playerId
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: jumpForce
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: sideForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: jumpReload
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: forwardForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: maximalXVelocsity
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7915989068065610287, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: m_Name
@@ -1687,7 +1715,7 @@ MonoBehaviour:
   spawnPointBlue: {x: 2, y: 1, z: 0}
   blueWinCanvas: {fileID: 2053995706}
   redWinCanvas: {fileID: 1573918534}
-  mathchTime: 10
+  mathchTime: 30
 --- !u!4 &1362389381
 Transform:
   m_ObjectHideFlags: 0
@@ -1727,15 +1755,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5332899414338870238, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: scoreMultiphier
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -5332899414338870238, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: collisionPenalty
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: zMax
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: zMin
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: playerId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: jumpForce
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: sideForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: jumpReload
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
+      propertyPath: forwardForce
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7915989068065610280, guid: a7bf73567837aa84dadfb1495b51c73d, type: 3}
       propertyPath: maximalXVelocsity
@@ -2097,8 +2149,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686032068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 245}
-  m_LocalScale: {x: 15, y: 1, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: 240.483}
+  m_LocalScale: {x: 20.26365, y: 1, z: 509.05002}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -2844,7 +2896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045923426}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.033, y: -2.5, z: -5.39}
+  m_LocalPosition: {x: 2.033, y: -2.5, z: -6.09}
   m_LocalScale: {x: 90, y: 0.9098, z: 90}
   m_Children: []
   m_Father: {fileID: 0}

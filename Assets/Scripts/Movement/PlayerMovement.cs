@@ -9,14 +9,25 @@ public class PlayerMovement : MonoBehaviour  {
 
     public float maximalXVelocsity;
 
-    public float sideForce = 500f;
+    public float sideForce;
+    public float forwardForce;
     public float jumpForce = 600f;
-    public float jumpReload = 0.1f;
+
+    public float jumpReload;
+    private float jumpReloadTimer = 0.0f;
+
     private bool toJump = false;
-    private bool jumpButtonPreviouslyPressed = false;
 
     public float shakeTime = .2f;
     public float shakeStrength = .2f;
+
+    public float zMax, zMin;
+
+    public Vector3 gyroCorrection;
+
+    bool positiveZgyro = false;
+    bool positiveXgyro = false;
+    bool minZFix;
 
     //PS4 Dualshock variables
     int m_StickId;
@@ -25,16 +36,13 @@ public class PlayerMovement : MonoBehaviour  {
 
     Vector3 oldControllerRotation = new Vector3(0,0,0);
 
-    // Touchpad variables
-    int m_TouchNum, m_Touch0X, m_Touch0Y, m_Touch0Id, m_Touch1X, m_Touch1Y, m_Touch1Id;
-    int m_TouchResolutionX, m_TouchResolutionY, m_AnalogDeadZoneLeft, m_AnalogDeadZoneRight;
-    float m_TouchPixelDensity;
-
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
         m_StickId = playerId + 1;
         m_LoggedInUser = PS4Input.RefreshUsersDetails(playerId);
+
+        gyroCorrection = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -42,83 +50,139 @@ public class PlayerMovement : MonoBehaviour  {
 
         if (PS4Input.PadIsConnected(playerId))
         {
-            Vector3 newControllerRotation = new Vector3(-PS4Input.PadGetLastOrientation(playerId).x, -PS4Input.PadGetLastOrientation(playerId).y, PS4Input.PadGetLastOrientation(playerId).z) * 100;
-           
+            PlayerMovementUpdate();
+            PlayerJumpUpdate();
 
-            PS4Input.GetLastTouchData(playerId, out m_TouchNum, out m_Touch0X, out m_Touch0Y, out m_Touch0Id, out m_Touch1X, out m_Touch1Y, out m_Touch1Id);
+            /*
+            Vector2 leftstick = new Vector2(Input.GetAxis("leftstick" + m_StickId + "horizontal"),
+                                            Input.GetAxis("leftstick" + m_StickId + "vertical"));
+            */
 
-            Vector3 movementStick = new Vector3(Input.GetAxis("leftstick" + m_StickId + "horizontal"), 0);
-
-            Vector3 movementDpad = new Vector3(Input.GetAxis("dpad" + m_StickId + "_horizontal"), 0);
-
-            bool jumpButtnonPressed = Input.GetKey((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true));
-
-            //movement control
-
-            if (movementDpad.x > 0.1 || movementStick.x > 0.1)
-            {
-                if (rb.velocity.x < maximalXVelocsity)
-                {
-                    rb.AddForce(sideForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-                }
-            }
-            if (movementDpad.x < -0.1 || movementStick.x < -0.1)
-            {
-                if (-rb.velocity.x < maximalXVelocsity)
-                {
-                    rb.AddForce(-sideForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-                }
-            }
-
-            //jump control
-
-            if (jumpButtnonPressed && toJump && !jumpButtonPreviouslyPressed)
-            {
-                jumpButtonPreviouslyPressed = true;
-            }
-
-            if (!jumpButtnonPressed && toJump && jumpButtonPreviouslyPressed)
-            {
-
-                    Debug.Log("Jump triggered by p" + playerId);
-                    
-                    rb.AddForce(Vector3.up * jumpForce*Time.deltaTime, ForceMode.Impulse);
-                    toJump = false;
-                    jumpButtonPreviouslyPressed = false;
-                   
-                    transform.DORewind();
-                    transform.DOShakeScale(shakeTime, shakeStrength, 2, 10);
-            }
 
         }
 
     }
+
+    private void PlayerMovementUpdate() {
+        Vector3 gyro = new Vector3(-PS4Input.PadGetLastOrientation(playerId).x,
+                                      -PS4Input.PadGetLastOrientation(playerId).y,
+                                      PS4Input.PadGetLastOrientation(playerId).z);
+        // gyro -= gyroCorrection;
+        // right:
+        if (rb.velocity.x < maximalXVelocsity && gyro.z < 0.0)
+        {
+            if (positiveZgyro == true)
+            {
+                Vector3 prevVelocity = rb.velocity;
+                prevVelocity.x = 0;
+                rb.velocity = prevVelocity;
+            }
+
+            rb.AddForce(sideForce * (float)Math.Sqrt(Math.Abs(gyro.z)) * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            positiveZgyro = false;
+        }
+        // left:
+        else if (-rb.velocity.x < maximalXVelocsity && gyro.z >= 0.0)
+        {
+            if (positiveZgyro == false)
+            {
+                Vector3 prevVelocity = rb.velocity;
+                prevVelocity.x = 0;
+                rb.velocity = prevVelocity;
+            }
+
+            rb.AddForce(-sideForce * (float)Math.Sqrt(Math.Abs(gyro.z)) * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            positiveZgyro = true;
+        }
+
+        // forward:
+        if (rb.position.z < zMax && gyro.x > 0.0)
+        {
+            if (positiveXgyro == false)
+            {
+                Vector3 prevVelocity = rb.velocity;
+                prevVelocity.z = 0;
+                rb.velocity = prevVelocity;
+            }
+
+            rb.AddForce(0, 0, forwardForce * (float)Math.Sqrt(Math.Abs(gyro.x)) * Time.deltaTime, ForceMode.VelocityChange);
+            positiveXgyro = true;
+        }
+        // back:
+        else if (rb.position.z >= zMin && gyro.x <= 0.0)
+        {
+            minZFix = true;
+            if (positiveXgyro == true)
+            {
+                Vector3 prevVelocity = rb.velocity;
+                prevVelocity.z = 0;
+                rb.velocity = prevVelocity;
+            }
+
+            rb.AddForce(0, 0, -forwardForce * (float)Math.Sqrt(Math.Abs(gyro.x)) * Time.deltaTime, ForceMode.VelocityChange);
+            positiveXgyro = false;
+        }
+        else {
+            if (minZFix == true)
+            {
+                minZFix = false;
+                Vector3 prevVelocity = rb.velocity;
+                prevVelocity.z = 0;
+                rb.velocity = prevVelocity;
+            }
+        }
+
+        /*
+           // right:
+           if (leftstick.x > 0.1)
+           {
+               if (rb.velocity.x < maximalXVelocsity)
+               {
+                   rb.AddForce(sideForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+               }
+           }
+
+           // left:
+           if (leftstick.x < -0.1)
+           {
+               if (-rb.velocity.x < maximalXVelocsity)
+               {
+                   rb.AddForce(-sideForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+               }
+           }
+           */
+
+    }
+
+    private void PlayerJumpUpdate() {
+        bool jumpButtnonPressed = Input.GetKeyDown((KeyCode)Enum.Parse(typeof(KeyCode), "Joystick" + m_StickId + "Button0", true));
+
+        if (jumpButtnonPressed)
+        {
+            if (toJump) { 
+                rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
+                toJump = false;
+
+                transform.DORewind();
+                transform.DOShakeScale(shakeTime, shakeStrength, 2, 10);
+            }
+        }
+
+        jumpReloadTimer += Time.deltaTime;
+        if (jumpReloadTimer >= jumpReload) {
+            jumpReloadTimer = 0.0f;
+            toJump = true;
+        }
+    }
+
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Surface") {
-           // Debug.Log("Jump reloaded" + playerId);
-            if (!toJump) {
-                // Invoke("EnableJump", jumpReload);
-                toJump = true;
-            }
+            toJump = true;
         }
 
         if (collision.gameObject.tag == "Obstacle") {
-            if (!toJump) {
-                //Invoke("EnableJump", jumpReload);
-                toJump = true;
-            }
-            // respawn;
+            toJump = true;
         }
     }
-
-    public void EnableJump() {
-       
-        toJump = true;
-    }
-
-    public void DisableJump() {
-        toJump = true;
-    }
-
 }
